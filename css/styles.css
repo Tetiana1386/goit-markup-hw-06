@@ -905,6 +905,11 @@ address {
   padding: 16px 12px;
 }
 
+.comment:focus {
+  border-color: var(--accent-color);
+  outline: transparent;
+}
+
 textarea::-webkit-input-placeholder {
   font-weight: 400;
   font-size: 14px;
@@ -931,7 +936,7 @@ textarea:-moz-placeholder {
 
 .modal-input:focus {
   border-color: var(--accent-color);
-  outline: none;
+  outline: transparent;
 }
 
 .modal-input:focus + .input-icon {
