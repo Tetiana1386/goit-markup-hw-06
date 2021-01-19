@@ -9,8 +9,6 @@
 }
 
 body {
-  position: relative;
-
   padding-top: 80px;
 
   background-color: var(--primary-white-color);
@@ -798,11 +796,11 @@ address {
 
 .form-field input {
   width: 358px;
-  margin: 0;
+  margin: 0 12px 0 0;
   padding: 15px 16px;
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  margin-right: 12px;
+
   color: var(--primary-text-color);
 
   background-color: var(--footer-bcg-color);
@@ -818,7 +816,8 @@ address {
 /*Модальное окно*/
 
 .backdrop {
-  position: absolute;
+  position: fixed;
+  z-index: 1;
   top: 0;
   left: 0;
   width: 100%;
@@ -841,26 +840,23 @@ address {
   background-color: var(--primary-white-color);
 }
 
-.close {
+.button-close {
+  position: absolute;
   display: inline-flex;
   align-items: center;
-
-  position: absolute;
   width: 30px;
   height: 30px;
   top: 8px;
   right: 8px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 50%;
-  cursor: pointer;
-
   background-color: var(--primary-white-color);
-
   transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
-.close:focus svg,
-.close:hover svg {
+.button-close:focus svg,
+.button-close:hover svg {
   fill: var(--accent-color);
 }
 
@@ -868,6 +864,7 @@ address {
   width: 528px;
   padding: 40px;
 }
+
 .form-title {
   margin-top: 0;
   margin-bottom: 12px;
@@ -877,15 +874,6 @@ address {
   line-height: 1.15;
   letter-spacing: 0.03em;
   text-align: center;
-}
-
-.form-label {
-  margin-bottom: 4px;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 1.2;
-  letter-spacing: 0.01em;
-  color: var(--primary-text-color);
 }
 
 .modal-label {
@@ -899,48 +887,31 @@ address {
   margin-bottom: 20px;
 }
 
-.comment {
-  border: 1px solid rgba(33, 33, 33, 0.2);
-  border-radius: 4px;
-  padding: 16px 12px;
-}
-
-.comment:focus {
-  border-color: var(--accent-color);
-  outline: transparent;
-}
-
-textarea::-webkit-input-placeholder {
+.form-label {
+  margin-bottom: 4px;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 1.14;
+  font-size: 12px;
+  line-height: 1.2;
   letter-spacing: 0.01em;
-  color: rgba(117, 117, 117, 0.5);
+  color: var(--primary-text-color);
 }
 
-textarea:-moz-placeholder {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.14;
-  letter-spacing: 0.01em;
-  color: rgba(117, 117, 117, 0.5);
-}
-
-.modal-input {
+.form-input {
   width: 100%;
-  height: 40px;
-  padding-left: 42px;
+  padding: 11px 12px 11px 42px;
   border: 1px solid rgba(33, 33, 33, 0.2);
   border-radius: 4px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.modal-input:focus {
+.form-input:hover {
+  cursor: pointer;
+}
+
+.form-input:focus {
   border-color: var(--accent-color);
   outline: transparent;
-}
-
-.modal-input:focus + .input-icon {
-  fill: var(--accent-color);
+  cursor: pointer;
 }
 
 .input-icon {
@@ -949,39 +920,50 @@ textarea:-moz-placeholder {
   left: 12px;
   width: 18px;
   height: 18px;
+  transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-input:focus + .input-icon {
+  fill: var(--accent-color);
+}
+
+.form-comment textarea::placeholder {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.14;
+  letter-spacing: 0.01em;
+  color: rgba(117, 117, 117, 0.5);
+}
+
+.comment {
+  border: 1px solid rgba(33, 33, 33, 0.2);
+  border-radius: 4px;
+  padding: 12px 16px;
+}
+
+.comment:hover {
+  cursor: pointer;
+}
+
+.comment:focus {
+  border-color: var(--accent-color);
+  outline: transparent;
+  cursor: pointer;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 textarea {
   resize: none;
 }
 
-.modal-button {
-  display: inline-flex;
-  align-items: center;
-  margin: 30px 124px 0px 124px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  padding: 10px 55px 10px 56px;
-
-  color: var(--primary-white-color);
-  background-color: var(--accent-color);
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 1.88;
-  text-decoration: none;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-}
 .check {
   display: inline-flex;
   align-items: center;
   padding-left: 12px;
+  margin-bottom: 30px;
 }
 
 .check-inbox {
-  /*-webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;*/
   position: absolute;
   width: 1px;
   height: 1px;
@@ -1000,6 +982,13 @@ textarea {
   margin-right: 8.38px;
   border: 1px solid var(--title-text-color);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.check-box,
+.check-text:hover {
+  cursor: pointer;
 }
 
 .check-text {
@@ -1008,10 +997,34 @@ textarea {
 .form-link {
   color: var(--accent-color);
 }
+
+.check-inbox:focus + .check-box {
+  border: 2px solid var(--title-text-color);
+}
+
 .check-inbox:checked + .check-box {
   border-color: var(--accent-color);
   background-color: var(--accent-color);
   background-image: url('../images/icon\ check.svg');
   background-size: contain;
   background-origin: border-box;
+}
+
+.modal-button {
+  display: block;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 10px 55px 10px 56px;
+
+  color: var(--primary-white-color);
+  background-color: var(--accent-color);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.88;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  cursor: pointer;
 }
